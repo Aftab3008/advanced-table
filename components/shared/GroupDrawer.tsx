@@ -87,6 +87,7 @@ export default function GroupDrawer({
               color="primary"
               onClick={() => {
                 table.setGrouping([]);
+                setIsGroupOpen(false);
               }}
               sx={{
                 marginTop: 1,
