@@ -26,76 +26,50 @@ export default function HideColumn({
       anchor="right"
       open={isColumnOpen}
       onClose={() => setIsColumnOpen(false)}
+      classes={{ paper: "bg-white shadow-lg w-full sm:w-[450px] p-4" }}
     >
-      <Box sx={{ width: { xs: "100%", sm: 450 }, padding: 1 }}>
-        <Paper
-          sx={{
-            padding: { xs: "2px", sm: "4px", md: "8px" },
-            display: "flex",
-            flexDirection: "column",
-            gap: { xs: "2px", sm: "4px" },
-            width: "100%",
-          }}
+      <Paper className="p-2 sm:p-4 md:p-8 bg-gray-100 flex flex-col gap-2 sm:gap-4 w-full">
+        <Typography variant="h6" className="font-bold mb-2 text-center">
+          Hide
+        </Typography>
+        <Stack
+          spacing={{ xs: 0.5, sm: 1, md: 2 }}
+          className="flex flex-col gap-2 sm:gap-4"
         >
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: "bold",
-              marginBottom: "8px",
-              textAlign: "center",
-            }}
-          >
-            Hide
-          </Typography>
-          <Stack
-            spacing={{ xs: 0.5, sm: 1, md: 2 }}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: { xs: "2px", sm: "4px" },
-            }}
-          >
-            {table.getAllLeafColumns().map((column) => {
-              const isVisible = column.getIsVisible();
+          {table.getAllLeafColumns().map((column) => {
+            const isVisible = column.getIsVisible();
 
-              return (
-                <Box
-                  key={column.id}
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    marginBottom: 2,
+            return (
+              <Box
+                key={column.id}
+                className="flex justify-between items-center mb-2"
+              >
+                <Typography variant="subtitle2" className="font-bold">
+                  {column.columnDef.header}
+                </Typography>
+                <Switch
+                  checked={isVisible}
+                  onChange={() => {
+                    column.toggleVisibility(!isVisible);
                   }}
-                >
-                  <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-                    {column.columnDef.header}
-                  </Typography>
-                  <Switch
-                    checked={isVisible}
-                    onChange={() => {
-                      column.toggleVisibility(!isVisible);
-                    }}
-                    inputProps={{ "aria-label": "toggle column visibility" }}
-                  />
-                </Box>
-              );
-            })}
+                  inputProps={{ "aria-label": "toggle column visibility" }}
+                />
+              </Box>
+            );
+          })}
 
-            <Button
-              onClick={() => {
-                table.resetColumnVisibility();
-                setIsColumnOpen(false);
-              }}
-              variant="contained"
-              sx={{ marginTop: 2 }}
-            >
-              Reset Column Visibility
-            </Button>
-          </Stack>
-        </Paper>
-      </Box>
+          <Button
+            onClick={() => {
+              table.resetColumnVisibility();
+              setIsColumnOpen(false);
+            }}
+            variant="contained"
+            className="bg-blue-500 text-white px-4 py-2 rounded-md mt-2"
+          >
+            Reset Column Visibility
+          </Button>
+        </Stack>
+      </Paper>
     </Drawer>
   );
 }
