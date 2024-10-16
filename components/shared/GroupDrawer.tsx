@@ -42,8 +42,10 @@ export default function GroupDrawer({
                   }}
                   variant="contained"
                   className={`mt-1 ${
-                    isGrouped ? "bg-red-500" : "bg-blue-500"
-                  } text-white`}
+                    isGrouped
+                      ? "bg-red-500 text-white"
+                      : "bg-white text-black/75"
+                  }`}
                 >
                   {isGrouped ? "Ungroup" : "Group"}
                 </Button>
@@ -53,7 +55,7 @@ export default function GroupDrawer({
 
           <Button
             variant="contained"
-            className="bg-gray-400 text-white mt-2"
+            className="bg-blue-500 text-white mt-2"
             onClick={() => {
               table.setGrouping([]);
               setIsGroupOpen(false);
