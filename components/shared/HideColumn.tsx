@@ -1,14 +1,17 @@
 import { Product } from "@/types";
+import CloseIcon from "@mui/icons-material/Close";
 import {
   Box,
   Button,
-  Drawer,
+  IconButton,
   Paper,
   Stack,
   Switch,
   Typography,
 } from "@mui/material";
 import { MRT_TableInstance } from "material-react-table";
+import CustomDrawer from "./CustomDrawer";
+import CustomHeader from "./CustomHeader";
 
 interface HideColumnProps {
   isColumnOpen: boolean;
@@ -22,16 +25,9 @@ export default function HideColumn({
   table,
 }: HideColumnProps) {
   return (
-    <Drawer
-      anchor="right"
-      open={isColumnOpen}
-      onClose={() => setIsColumnOpen(false)}
-      classes={{ paper: "bg-white shadow-lg w-full sm:w-[450px] p-4" }}
-    >
+    <CustomDrawer isOpen={isColumnOpen} setIsOpen={setIsColumnOpen}>
       <Paper className="p-2 sm:p-4 md:p-8 bg-gray-100 flex flex-col gap-2 sm:gap-4 w-full">
-        <Typography variant="h6" className="font-bold mb-2 text-center">
-          Hide
-        </Typography>
+        <CustomHeader title="Hide Columns" setIsOpen={setIsColumnOpen} />
         <Stack
           spacing={{ xs: 0.5, sm: 1, md: 2 }}
           className="flex flex-col gap-2 sm:gap-4"
@@ -70,6 +66,6 @@ export default function HideColumn({
           </Button>
         </Stack>
       </Paper>
-    </Drawer>
+    </CustomDrawer>
   );
 }

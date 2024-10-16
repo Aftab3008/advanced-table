@@ -1,9 +1,11 @@
 import { Product } from "@/types";
-import { Box, Button, Drawer, Paper, Stack, Typography } from "@mui/material";
+import { Box, Button, Paper, Stack, Typography } from "@mui/material";
 import {
   MRT_TableHeadCellFilterContainer,
   MRT_TableInstance,
 } from "material-react-table";
+import CustomDrawer from "./CustomDrawer";
+import CustomHeader from "./CustomHeader";
 
 interface FilterDrawerProps {
   isDrawerOpen: boolean;
@@ -17,18 +19,9 @@ export default function FilterDrawer({
   table,
 }: FilterDrawerProps) {
   return (
-    <Drawer
-      anchor="right"
-      open={isDrawerOpen}
-      onClose={() => {
-        setIsDrawerOpen(false);
-      }}
-      classes={{ paper: "bg-white shadow-lg w-full sm:w-[450px] p-4" }}
-    >
+    <CustomDrawer isOpen={isDrawerOpen} setIsOpen={setIsDrawerOpen}>
       <Paper className="p-2 sm:p-4 md:p-8 bg-gray-100 flex flex-col gap-2 sm:gap-4 w-full">
-        <Typography variant="h6" className="font-bold mb-2 text-center">
-          Filters
-        </Typography>
+        <CustomHeader title="Filter" setIsOpen={setIsDrawerOpen} />
         <Stack
           direction="column"
           spacing={{ xs: 0.5, sm: 1, md: 2 }}
@@ -37,7 +30,7 @@ export default function FilterDrawer({
           {table.getLeafHeaders().map((header) => (
             <Box key={header.id} className="flex flex-col">
               <Typography variant="subtitle2" className="font-bold mb-1">
-                Filter by {header.column.columnDef.header}
+                {header.column.columnDef.header}
               </Typography>
               <MRT_TableHeadCellFilterContainer
                 header={header}
@@ -62,6 +55,6 @@ export default function FilterDrawer({
           </Button>
         </Stack>
       </Paper>
-    </Drawer>
+    </CustomDrawer>
   );
 }

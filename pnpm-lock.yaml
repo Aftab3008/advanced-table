@@ -41,6 +41,9 @@ importers:
       '@types/react-fontawesome':
         specifier: ^1.6.8
         version: 1.6.8
+      DateRangePicker:
+        specifier: link:@mui/lab/DateRangePicker
+        version: link:@mui/lab/DateRangePicker
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0

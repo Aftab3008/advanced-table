@@ -1,6 +1,8 @@
 import { Product } from "@/types";
-import { Box, Button, Drawer, Paper, Stack, Typography } from "@mui/material";
+import { Box, Button, Paper, Stack, Typography } from "@mui/material";
 import { MRT_TableInstance } from "material-react-table";
+import CustomDrawer from "./CustomDrawer";
+import CustomHeader from "./CustomHeader";
 
 interface SortDrawerProps {
   isSortOpen: boolean;
@@ -14,16 +16,9 @@ export default function SortDrawer({
   table,
 }: SortDrawerProps) {
   return (
-    <Drawer
-      anchor="right"
-      open={isSortOpen}
-      onClose={() => setIsSortOpen(false)}
-      classes={{ paper: "bg-white shadow-lg w-full sm:w-[450px] p-4" }}
-    >
+    <CustomDrawer isOpen={isSortOpen} setIsOpen={setIsSortOpen}>
       <Paper className="p-2 sm:p-4 md:p-8 bg-gray-100 flex flex-col gap-2 sm:gap-4 w-full">
-        <Typography variant="h6" className="font-bold mb-2 text-center">
-          Sort
-        </Typography>
+        <CustomHeader title="Sort" setIsOpen={setIsSortOpen} />
         <Stack
           spacing={{ xs: 0.5, sm: 1, md: 2 }}
           className="flex flex-col gap-2 sm:gap-4"
@@ -39,7 +34,7 @@ export default function SortDrawer({
             return (
               <Box key={header.id} className="flex flex-col">
                 <Typography variant="subtitle2" className="font-bold mb-1">
-                  Sort By {header.column.columnDef.header}
+                  {header.column.columnDef.header}
                 </Typography>
 
                 <Box className="flex gap-1 w-full">
@@ -115,6 +110,6 @@ export default function SortDrawer({
           </Button>
         </Stack>
       </Paper>
-    </Drawer>
+    </CustomDrawer>
   );
 }

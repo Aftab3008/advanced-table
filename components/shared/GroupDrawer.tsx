@@ -1,6 +1,8 @@
 import { Product } from "@/types";
-import { Box, Button, Drawer, Paper, Stack, Typography } from "@mui/material";
+import { Box, Button, Paper, Stack, Typography } from "@mui/material";
 import { MRT_TableInstance } from "material-react-table";
+import CustomDrawer from "./CustomDrawer";
+import CustomHeader from "./CustomHeader";
 
 interface GroupDrawerProps {
   isGroupOpen: boolean;
@@ -14,18 +16,9 @@ export default function GroupDrawer({
   table,
 }: GroupDrawerProps) {
   return (
-    <Drawer
-      anchor="right"
-      open={isGroupOpen}
-      onClose={() => {
-        setIsGroupOpen(false);
-      }}
-      classes={{ paper: "bg-white shadow-lg w-full sm:w-[450px] p-4" }}
-    >
+    <CustomDrawer isOpen={isGroupOpen} setIsOpen={setIsGroupOpen}>
       <Paper className="p-2 sm:p-4 md:p-8 bg-gray-100 flex flex-col gap-2 sm:gap-4 w-full">
-        <Typography variant="h6" className="font-bold mb-2 text-center">
-          Group
-        </Typography>
+        <CustomHeader title="Group" setIsOpen={setIsGroupOpen} />
         <Stack
           direction="column"
           spacing={{ xs: 0.5, sm: 1, md: 2 }}
@@ -37,7 +30,7 @@ export default function GroupDrawer({
             return (
               <Box key={header.id} className="flex flex-col">
                 <Typography variant="subtitle2" className="mb-2 font-bold">
-                  Group by {header.column.columnDef.header}
+                  {header.column.columnDef.header}
                 </Typography>
                 <Button
                   onClick={() => {
@@ -70,6 +63,6 @@ export default function GroupDrawer({
           </Button>
         </Stack>
       </Paper>
-    </Drawer>
+    </CustomDrawer>
   );
 }
