@@ -16,8 +16,17 @@ export default function CustomDrawer({
       anchor="right"
       open={isOpen}
       onClose={() => setIsOpen(false)}
-      classes={{
-        paper: "w-full sm:w-[450px] md:w-[500px] p-4 bg-white shadow-lg",
+      sx={{
+        "& .MuiDrawer-paper": {
+          width: {
+            xs: "100%",
+            sm: "450px",
+            md: "500px",
+          },
+          p: 4,
+          bgcolor: "white",
+          boxShadow: 3,
+        },
       }}
     >
       {children}

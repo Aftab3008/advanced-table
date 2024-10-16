@@ -17,19 +17,39 @@ export default function GroupDrawer({
 }: GroupDrawerProps) {
   return (
     <CustomDrawer isOpen={isGroupOpen} setIsOpen={setIsGroupOpen}>
-      <Paper className="p-2 sm:p-4 md:p-8 bg-gray-100 flex flex-col gap-2 sm:gap-4 w-full">
+      <Paper
+        sx={{
+          padding: { xs: 2, sm: 4, md: 8 },
+          backgroundColor: "grey.100",
+          display: "flex",
+          flexDirection: "column",
+          gap: { xs: 2, sm: 4 },
+          width: "100%",
+        }}
+      >
         <CustomHeader title="Group" setIsOpen={setIsGroupOpen} />
         <Stack
           direction="column"
           spacing={{ xs: 0.5, sm: 1, md: 2 }}
-          className="flex flex-col gap-2 sm:gap-4"
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: { xs: 2, sm: 4 },
+            width: "100%",
+          }}
         >
           {table.getLeafHeaders().map((header) => {
             const isGrouped = table.getState().grouping.includes(header.id);
 
             return (
-              <Box key={header.id} className="flex flex-col">
-                <Typography variant="subtitle2" className="mb-2 font-bold">
+              <Box
+                key={header.id}
+                sx={{ display: "flex", flexDirection: "column" }}
+              >
+                <Typography
+                  variant="subtitle2"
+                  sx={{ mb: 2, fontWeight: "bold" }}
+                >
                   {header.column.columnDef.header}
                 </Typography>
                 <Button
@@ -41,11 +61,14 @@ export default function GroupDrawer({
                     );
                   }}
                   variant="contained"
-                  className={`mt-1 ${
-                    isGrouped
-                      ? "bg-red-500 text-white"
-                      : "bg-white text-black/75"
-                  }`}
+                  sx={{
+                    mt: 1,
+                    backgroundColor: isGrouped ? "red.500" : "white",
+                    color: isGrouped ? "white" : "black",
+                    "&:hover": {
+                      backgroundColor: isGrouped ? "red.600" : "gray.100",
+                    },
+                  }}
                 >
                   {isGrouped ? "Ungroup" : "Group"}
                 </Button>
@@ -55,7 +78,14 @@ export default function GroupDrawer({
 
           <Button
             variant="contained"
-            className="bg-blue-500 text-white mt-2"
+            sx={{
+              backgroundColor: "blue.500",
+              color: "white",
+              mt: 2,
+              "&:hover": {
+                backgroundColor: "blue.600",
+              },
+            }}
             onClick={() => {
               table.setGrouping([]);
               setIsGroupOpen(false);

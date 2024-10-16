@@ -17,11 +17,20 @@ export default function SortDrawer({
 }: SortDrawerProps) {
   return (
     <CustomDrawer isOpen={isSortOpen} setIsOpen={setIsSortOpen}>
-      <Paper className="p-2 sm:p-4 md:p-8 bg-gray-100 flex flex-col gap-2 sm:gap-4 w-full">
+      <Paper
+        sx={{
+          padding: { xs: 2, sm: 4, md: 8 },
+          backgroundColor: "grey.100",
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          width: "100%",
+        }}
+      >
         <CustomHeader title="Sort" setIsOpen={setIsSortOpen} />
         <Stack
           spacing={{ xs: 0.5, sm: 1, md: 2 }}
-          className="flex flex-col gap-2 sm:gap-4"
+          sx={{ display: "flex", flexDirection: "column", gap: 2 }}
         >
           {table.getLeafHeaders().map((header) => {
             const sortedColumn = table
@@ -31,65 +40,82 @@ export default function SortDrawer({
             const isAsc = sortedColumn && !sortedColumn.desc;
             const isDesc = sortedColumn && sortedColumn.desc;
 
+            const handleSort = (isAscending: boolean) => {
+              const currentSorting = table.getState().sorting;
+              const existingSort = currentSorting.find(
+                (sort) => sort.id === header.id
+              );
+
+              if (existingSort) {
+                if (
+                  (isAscending && !existingSort.desc) ||
+                  (!isAscending && existingSort.desc)
+                ) {
+                  table.setSorting(
+                    currentSorting.filter((sort) => sort.id !== header.id)
+                  );
+                } else {
+                  table.setSorting(
+                    currentSorting.map((sort) =>
+                      sort.id === header.id
+                        ? { id: header.id, desc: !isAscending }
+                        : sort
+                    )
+                  );
+                }
+              } else {
+                table.setSorting([
+                  ...currentSorting,
+                  { id: header.id, desc: !isAscending },
+                ]);
+              }
+            };
+
             return (
-              <Box key={header.id} className="flex flex-col">
-                <Typography variant="subtitle2" className="font-bold mb-1">
+              <Box
+                key={header.id}
+                sx={{ display: "flex", flexDirection: "column" }}
+              >
+                <Typography
+                  variant="subtitle2"
+                  sx={{ fontWeight: "bold", mb: 1 }}
+                >
                   {header.column.columnDef.header}
                 </Typography>
 
-                <Box className="flex gap-1 w-full">
+                <Box sx={{ display: "flex", gap: 1, width: "100%" }}>
                   <Button
-                    onClick={() => {
-                      const currentSorting = table.getState().sorting;
-                      const existingSort = currentSorting.find(
-                        (sort) => sort.id === header.id
-                      );
-                      if (existingSort && existingSort.desc === false) {
-                        table.setSorting(
-                          currentSorting.filter((sort) => sort.id !== header.id)
-                        );
-                      } else {
-                        table.setSorting([
-                          ...currentSorting,
-                          { id: header.id, desc: false },
-                        ]);
-                      }
-                    }}
+                    onClick={() => handleSort(true)}
                     variant={isAsc ? "contained" : "outlined"}
                     color={isAsc ? "primary" : "inherit"}
-                    className={`flex-1 ${
-                      isAsc
-                        ? "bg-blue-500 text-white"
-                        : "bg-white border border-gray-300"
-                    } px-4 py-2 rounded-md`}
+                    sx={{
+                      flex: 1,
+                      backgroundColor: isAsc ? "blue.500" : "white",
+                      color: isAsc ? "white" : "inherit",
+                      border: isAsc ? "none" : "1px solid",
+                      borderColor: isAsc ? "transparent" : "gray.300",
+                      px: 4,
+                      py: 2,
+                      borderRadius: "8px",
+                    }}
                   >
                     Asc
                   </Button>
 
                   <Button
-                    onClick={() => {
-                      const currentSorting = table.getState().sorting;
-                      const existingSort = currentSorting.find(
-                        (sort) => sort.id === header.id
-                      );
-                      if (existingSort && existingSort.desc === true) {
-                        table.setSorting(
-                          currentSorting.filter((sort) => sort.id !== header.id)
-                        );
-                      } else {
-                        table.setSorting([
-                          ...currentSorting,
-                          { id: header.id, desc: true },
-                        ]);
-                      }
-                    }}
+                    onClick={() => handleSort(false)}
                     variant={isDesc ? "contained" : "outlined"}
                     color={isDesc ? "primary" : "inherit"}
-                    className={`flex-1 ${
-                      isDesc
-                        ? "bg-blue-500 text-white"
-                        : "bg-white border border-gray-300"
-                    } px-4 py-2 rounded-md`}
+                    sx={{
+                      flex: 1,
+                      backgroundColor: isDesc ? "blue.500" : "white",
+                      color: isDesc ? "white" : "inherit",
+                      border: isDesc ? "none" : "1px solid",
+                      borderColor: isDesc ? "transparent" : "gray.300",
+                      px: 4,
+                      py: 2,
+                      borderRadius: "8px",
+                    }}
                   >
                     Desc
                   </Button>
@@ -104,7 +130,14 @@ export default function SortDrawer({
               setIsSortOpen(false);
             }}
             variant="contained"
-            className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4"
+            sx={{
+              backgroundColor: "blue.500",
+              color: "white",
+              px: 4,
+              py: 2,
+              borderRadius: "8px",
+              mt: 4,
+            }}
           >
             Reset Sort
           </Button>
