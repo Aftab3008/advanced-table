@@ -1059,7 +1059,6 @@ export const products = [
 <summary><code>types/index.ts</code></summary>
 
 ```typescript
-/** @type {import('tailwindcss').Config} */
 export type Product = {
   id: number;
   name: string;
