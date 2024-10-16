@@ -15,7 +15,7 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "Advanced React Table",
-  description: "Advanced React Table",
+  description: "Advanced React Table with Material-UI and Tanstack",
   icons: ["/logo.png"],
 };
 
